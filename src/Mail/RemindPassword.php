@@ -34,6 +34,6 @@ class RemindPassword extends Mailable
 
         $token = \Firebase\JWT\JWT::encode($token, $key);
 
-        return $this->subject(config('mail.subjects.reset-password','Password reset request'))->view('emails.reset-password', ['token' => $token]);
+        return $this->subject(config('mail.subjects.reset-password','Password reset request'))->view('authentication-package::emails.reset-password', ['token' => $token]);
     }
 }

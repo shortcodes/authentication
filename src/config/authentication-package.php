@@ -1,9 +1,7 @@
 <?php
 
 return [
-    'prefix' => [
-        'v1'
-    ],
+    'prefix' => 'v1',
     'routes' => [
         'login' => 'login',
         'register' => 'register',

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use Shortcodes\Authentication\Mail\RegisterUser;
+use Log;
 
 class RegisterController extends Controller
 {

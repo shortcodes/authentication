@@ -34,6 +34,6 @@ class RegisterUser extends Mailable
 
         $token = \Firebase\JWT\JWT::encode($token, $key);
 
-        return $this->subject(config('mail.subjects.user-registration','User registration'))->view('emails.register-user', ['token' => $token]);
+        return $this->subject(config('mail.subjects.user-registration','User registration'))->view('authentication-package::emails.register-user', ['token' => $token]);
     }
 }

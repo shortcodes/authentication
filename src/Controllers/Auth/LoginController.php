@@ -35,12 +35,12 @@ class LoginController extends Controller
         ], 422);
     }
 
-    private function credentials()
+    protected function credentials()
     {
         return ['email', 'password'];
     }
 
-    private function additionalConditions()
+    protected function additionalConditions()
     {
         return ['active' => 1];
     }

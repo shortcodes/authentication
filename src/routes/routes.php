@@ -6,14 +6,26 @@ use Shortcodes\Authentication\Controllers\Auth\RegisterController;
 
 Route::group(['prefix' => config('authentication-package.prefix', 'v1')], function () {
 
-    Route::post(config('authentication-package.routes.login', '/login'), [LoginController::class, 'login'])->name('login');
-    Route::post(config('authentication-package.routes.register', '/register'), [RegisterController::class, 'register'])->name('register');
-    Route::post(config('authentication-package.routes.confirm-registration', '/register/{token}'), [RegisterController::class, 'confirmRegistration'])->name('confirm-registration');
-    Route::post(config('authentication-package.routes.remind-password', '/remind-password'), [PasswordController::class, 'remindPassword'])->name('remind-password');
-    Route::post(config('authentication-package.routes.reset-password', '/reset-password'), [PasswordController::class, 'resetPassword'])->name('reset-password');
+    if (in_array('login', config('authentication-package.disabled'))) {
+        Route::post(config('authentication-package.routes.login.route', '/login'), [config('authentication-package.routes.login.controller', LoginController::class), 'login'])->name('login');
+    }
+    if (in_array('register', config('authentication-package.disabled'))) {
+        Route::post(config('authentication-package.routes.register.route', '/register'), [config('authentication-package.routes.register.controller', RegisterController::class), 'register'])->name('register');
+    }
+    if (in_array('confirm-registration', config('authentication-package.disabled'))) {
+        Route::post(config('authentication-package.routes.confirm-registration.route', '/register/{token}'), [config('authentication-package.routes.confirm-registration.controller', RegisterController::class), 'confirmRegistration'])->name('confirm-registration');
+    }
+    if (in_array('remind-password', config('authentication-package.disabled'))) {
+        Route::post(config('authentication-package.routes.remind-password.route', '/remind-password'), [config('authentication-package.routes.remind-password.controller', PasswordController::class), 'remindPassword'])->name('remind-password');
+    }
+    if (in_array('reset-password', config('authentication-package.disabled'))) {
+        Route::post(config('authentication-package.routes.reset-password.route', '/reset-password'), [config('authentication-package.routes.reset-password.controller', PasswordController::class), 'resetPassword'])->name('reset-password');
+    }
 
     Route::group(['middleware' => 'auth:api'], function () {
-        Route::post(config('authentication-package.routes.change-password', '/account/change-password'), [PasswordController::class, 'changePassword']);
+        if (in_array('change-password', config('authentication-package.disabled'))) {
+            Route::post(config('authentication-package.routes.change-password.route', '/account/change-password'), [config('authentication-package.routes.change-password.controller', PasswordController::class), 'changePassword']);
+        }
     });
 
 });

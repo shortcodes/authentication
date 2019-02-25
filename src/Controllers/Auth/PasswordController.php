@@ -46,7 +46,11 @@ class PasswordController extends Controller
             'password' => 'required|min:6',
         ]);
 
-        $decoded = JWT::decode($request->get('token'), env("JWT_SECRET"), [env("JWT_ALGO")]);
+        try {
+            $decoded = JWT::decode($request->get('token'), env("JWT_SECRET"), [env("JWT_ALGO")]);
+        } catch (\Exception $e) {
+            logger($e);
+        }
 
         if (!$decoded ||
             $decoded->purpose !== self::RESET_PASSWORD_PURPOSE ||
